@@ -98,8 +98,11 @@ numbers and p is a prime number.
 Write a function that takes a pair of integers (`max`, `p`) and returns a hash
 function `h(x)=(ax+b)%p` where `a` and `b` are random integers chosen
 uniformly between 1 and `max`, using Python's `random.randint`. Write a
-script that (1) initializes the random seed from `<seed>`, (2) generates a hash
-function `h` from `<max>` and `<p>`, and (3) prints the value of `h(x)`.
+script that:
+1. initializes the random seed from `<seed>`,
+2. generates a hash
+function `h` from `<max>` and `<p>`,
+3. prints the value of `h(x)`.
 
 #### Required syntax
 
@@ -116,10 +119,12 @@ the prime numbers in 2.
 
 ### Task
 
-Write a script that (1) creates a list of `<n>` hash functions where
+Write a script that:
+1. creates a list of `<n>` hash functions where
 the `ith` hash function is obtained using the generator in 3, defining
 `<p>` as the `ith` prime number larger than `<max>` (`<p>` being
-obtained as in 1), (2) prints the value of `h_i(x)`, where `h_i` is
+obtained as in 1),
+2. prints the value of `h_i(x)`, where `h_i` is
 the `ith` hash function in the list. The random seed must be initialized from `<seed>`.
 
 #### Required syntax
@@ -138,11 +143,15 @@ We will now compute the min-hash signature matrix of the states.
 
 #### Task
 
-Write a function that takes (1) a state dictionary as defined in 1
+Write a function that takes:
+1. a state dictionary as defined in 1
 (yes, a *dictionary*, not an RDD, this function will be used later to
-map an RDD), and (2) a list of `<n>` hash functions generated as in
+map an RDD), and
+2. a list of `<n>` hash functions generated as in
 the previous task, setting `<max>` to the number of lines in
-`<datafile>`. The function must return a state signature dictionary
+`<datafile>`.
+
+The function must return a state signature dictionary
 containing a `name` key, storing the state name, and a set of integer
 keys storing the min-hash signature values for the `<n>` hash
 functions. For instance, `sig[i]` will contain the min-hash signature
@@ -179,86 +188,53 @@ hash of a band of a signature vector.
 
 Write a script that, given the signature dictionary of state `<state>` computed from
 `<n>` hash functions (as defined in the previous task), a particular
-band `<b>` and a number of rows `<r>`, (1) constructs a signature
+band `<b>` and a number of rows `<n_r>`:
+1. constructs a signature
 string for band `<b>` as the string representation (obtained with
 `str`) of a dictionary `sig_dict` containing `<r>` keys defined as
-`sig_dict[i]=sig_vect[i]` for i in [b*r, (b+1)*r[, (2) prints the hash
-of `sig_dict` using Python's built-in `hash` function. The random seed must be initialized from `<seed>`, as previously.
+`sig_dict[i]=sig_vect[i]` for i in [b*n_r, (b+1)*n_r[,
+2. prints the hash
+of `sig_dict` using Python's built-in `hash` function.
+
+The random seed must be initialized from `<seed>`, as previously.
 
 #### Required syntax
 
-`hash_band.py <datafile> <seed> <state> <n> <b> <r>`
+`hash_band.py <datafile> <seed> <state> <n> <b> <n_r>`
 
 #### Test
 
 `tests/test_hash_band.py`
 
-## 7. Hashing all signature vectors 
+## 7. Hashing all the signature vectors 
 
-We will now hash the signature matrix in bands (II). 
+We will now hash the complete signature matrix in bands. 
 
 #### Task
 
-Write a script that, given an RDD of state signature dictionary (as
-defined previously), a number of bands `<b>` and a number of rows
-`<r>`, (1) maps RDD elements to a list of `<b>` 'bucket dictionaries',
-where the bucket dictionary of band `<i>` has a single key `sig_hash`
-that equals the hash of the state signature dictionary for the `ith`
-band (as defined in the previous task) and contains the abbreviation of the corresponding state (for instance `qc`), (2) collects and prints the first `<k>` elements in this RDD.
+Write a script that, given an RDD of state signature dictionaries
+constructed from `n=<n_b>*<n_r>` hash functions (as in 5), a number of bands
+`<n_b>` and a number of rows `<n_r>`:
+1. maps each RDD element (using
+`flatMap`) to a list of `((b, hash), state_name)` tuples where `hash`
+is the hash of the signature vector of state `state_name` in band `b` as defined in 6. Note: it is not a triple, it is a pair.
+2. groups the resulting RDD by key: states that hash to the same bucket for band `b` will appear together.
+3. prints the buckets with more than 2 elements using the function in `pretty_print_bands.py`.
+
+That's it, you have printed the similar items, in O(n)!
+
 
 #### Required syntax
 
-`hash_bands.py <datafile> <seed> <state> <n> <b> <r> <k>`
+`hash_bands.py <datafile> <seed> <n_b> <n_r>`
 
 #### Test
 
 `tests/test_hash_bands.py`
 
-## 8. Merging hash buckets
+## 9. Bonus: similar items for a given similarity threshold
 
-We will now hash the signature matrix in bands (III). 
-
-#### Task
-
-Write a function `merge` that merges two hash buckets (as defined
-previously) `x` and `y` in a hash bucket `z` such that `z[k]` is a
-list containing all the elements in `x[k]` and all the elements in
-`y[k]`, where `k` is a key of `x` or a key of `y`. Write a script that
-takes the RDD produced in the previous task and (1) maps it, using the
-`flatMap` transformation, to a set of (`b`, `buckets`) pairs, where
-`b` is a band id and `buckets` are the buckets found in this band (as
-defined previously), (2) reduces it by key (band id) and merges all
-the buckets in a given band using function `merge`, (3) collects the first <k> elements and prints them.
-
-#### Required syntax
-
-`hash_bands_merge.py <datafile> <seed> <state> <n> <b> <r> <k>`
-
-#### Test
-
-`tests/test_hash_bands_merge.py`
-
-## 9. Printing similar items
-
-We will now hash the signature matrix in bands (IV).
-
-#### Task
-
-Write a script that prints the buckets that have more than 1 element,
-for all bands. These are finally the similar items, and you got them
-in O(n)!
-
-#### Required syntax
-
-`similar_items.py <datafile> <seed> <state> <n> <b> <r>`
-
-#### Test
-
-`tests/test_similar_items.py`
-
-## 10. Bonus: similar items for a given similarity threshold
-
-The script written for the previous task takes `<b>` and `<r>` as
+The script written for the previous task takes `<n_b>` and `<n_r>` as
 parameters while a similarity threshold `<s>` would be more useful.
 
 #### Task
