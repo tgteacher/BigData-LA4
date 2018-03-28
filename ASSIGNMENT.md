@@ -90,7 +90,7 @@ not a multiple of any integer lower or equal than `sqrt(x)`.
 ## 3. Hash function generator
 
 We will generate hash
-functions of the form `h(x) = ax+b % p`, where a and b are random
+functions of the form `h(x) = (ax+b) % p`, where a and b are random
 numbers and p is a prime number.
 
 ### Task
@@ -192,7 +192,7 @@ band `<b>` and a number of rows `<n_r>`:
 1. constructs a signature
 string for band `<b>` as the string representation (obtained with
 `str`) of a dictionary `sig_dict` containing `<r>` keys defined as
-`sig_dict[i]=sig_vect[i]` for i in [b*n_r, (b+1)*n_r[,
+`sig_dict[i]=sig_vect[i]` for i in `[b.n_r, (b+1).n_r[`,
 2. prints the hash
 of `sig_dict` using Python's built-in `hash` function.
 
