@@ -67,20 +67,17 @@ You are strongly encouraged to use the RDD created here in the remainder of the 
 
 `tests/test_data_preparation.py`
 
-## Prime numbers
+## 2. Prime numbers
 
 To create signatures we need hash functions (see next task). To create
 hash functions, we need prime numbers.
 
 ### Task
 
-Write a script that prints the list of *n* consecutive prime
-numbers greater or equal to *c*. The script will, for every integer
-*x* between *c* and *c+n*, add *x* to the current list if *x* is
-prime. A simple way to test if an integer *x* is prime is to check
-that *x* is not a multiple of any integer lower or equal than
-\sqrt {x}, that is, that *x % y* is not 0 for every *y* in *[2,
-\sqrt{x}]*.
+Write a script that prints the list of `n` consecutive prime numbers
+greater or equal to `c`. The script will print one number per line. A
+simple way to test if an integer `x` is prime is to check that `x` is
+not a multiple of any integer lower or equal than sqrt(x). 
 
 #### Required syntax
 
@@ -90,17 +87,17 @@ that *x* is not a multiple of any integer lower or equal than
 
 `tests/test_primes.py`
 
-## Hash functions
+## 3. Hash functions
 
 We will generate hash
-functions of the form h(x) = ax+b % p, where a and b are random
+functions of the form `h(x) = ax+b % p`, where a and b are random
 numbers and p is a prime number.
 
 ### Task
 
-Write a function that takes a pair (*max*, *p*) and returns a hash
-function h(x)=(ax+b)%p where *a* and *b* are random integers chosen
-uniformly between 1 and *max*, using Python's random.randint. Write a
+Write a function that takes a pair of integers (`max`, `p`) and returns a hash
+function `h(x)=(ax+b)%p` where `a` and `b` are random integers chosen
+uniformly between 1 and `max`, using Python's `random.randint`. Write a
 script that (1) initializes the random seed from `<seed>`, (2) generates a hash
 function `h` from `<max>` and `<p>`, and (3) prints the value of `h(x)`.
 
@@ -112,7 +109,7 @@ function `h` from `<max>` and `<p>`, and (3) prints the value of `h(x)`.
 
 `tests/test_hash.py`
 
-## Signature Matrix
+## 4. Signature Matrix
 
 We will now compute the signature matrix of the states. 
 
@@ -136,7 +133,7 @@ and prints the first `<n>` elements in this RDD.
 
 `tests/test_signatures.py`
 
-## Hashing a band of a signature vector 
+## 5. Hashing a band of a signature vector 
 
 We will now hash the signature matrix in bands (I). 
 
@@ -157,7 +154,7 @@ of `sig_dict` using Python's built-in `hash` function.
 
 `tests/test_hash_band.py`
 
-## Hashing all signature vectors 
+## 6. Hashing all signature vectors 
 
 We will now hash the signature matrix in bands (II). 
 
@@ -178,7 +175,7 @@ band (as defined in the previous task) and contains the abbreviation of the corr
 
 `tests/test_hash_bands.py`
 
-## Merging hash buckets
+## 7. Merging hash buckets
 
 We will now hash the signature matrix in bands (III). 
 
@@ -202,7 +199,7 @@ the buckets in a given band using function `merge`, (3) collects the first <k> e
 
 `tests/test_hash_bands_merge.py`
 
-## Printing similar items
+## 8. Printing similar items
 
 We will now hash the signature matrix in bands (IV).
 
@@ -220,7 +217,7 @@ in O(n)!
 
 `tests/test_similar_items.py`
 
-## Bonus: similar items for a given similarity threshold
+## 9. Bonus: similar items for a given similarity threshold
 
 The script written for the previous task takes `<b>` and `<r>` as
 parameters while a similarity threshold `<s>` would be more useful.
