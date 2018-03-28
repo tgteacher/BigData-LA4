@@ -74,15 +74,21 @@ hash functions, we need prime numbers.
 
 ### Task
 
-Write a function that returns the list of *n* consecutive prime
-numbers greater or equal to *c*. The function will, for every integer
+Write a script that prints the list of *n* consecutive prime
+numbers greater or equal to *c*. The script will, for every integer
 *x* between *c* and *c+n*, add *x* to the current list if *x* is
 prime. A simple way to test if an integer *x* is prime is to check
 that *x* is not a multiple of any integer lower or equal than
 \sqrt {x}, that is, that *x % y* is not 0 for every *y* in *[2,
 \sqrt{x}]*.
 
+#### Required syntax
+
+`primes.py <n> <c>`
+
 ### Test
+
+`tests/test_primes.py`
 
 ## Hash functions
 
@@ -94,100 +100,144 @@ numbers and p is a prime number.
 
 Write a function that takes a pair (*max*, *p*) and returns a hash
 function h(x)=(ax+b)%p where *a* and *b* are random integers chosen
-uniformly between 1 and *max*, using Python's random.randint.
+uniformly between 1 and *max*, using Python's random.randint. Write a
+script that (1) initializes the random seed from `<seed>`, (2) generates a hash
+function `h` from `<max>` and `<p>`, and (3) prints the value of `h(x)`.
+
+#### Required syntax
+
+`hash.py <seed> <max> <p> <x>`
 
 ### Test
 
+`tests/test_hash.py`
+
 ## Signature Matrix
 
+We will now compute the signature matrix of the states. 
+
+#### Task
+
 Write a function that takes (1) a state dictionary, as previously
-defined, and (2) a list of hash functions generated using the previous function. 
-
-The columns of the signature matrix will be computed independently.
-That is, every state dictionary in the RDD will be mapped to its
-signature.
-
-#### Task
-
-Write a script that computes the squared Euclidean
-distance between two states. 
+defined, and (2) a list of `<n_hashes>` hash functions generated in
+the previous task. The function must return a state signature
+dictionary containing a `name` key, storing the state name, and a set
+of integer keys storing signature values for the `<n_hashes>` hash
+functions. For instance, `sig[i]` will contain the signature value for the `ith` hash function. Apply this function to the RDD of dictionary states
+to create a signature "matrix", in fact an RDD containing state
+signatures represented as dictionaries. Write a script that collects
+and prints the first `<n>` elements in this RDD.
 
 #### Required syntax
 
-`distance2.py <data_file> <state1> <state2>`
+`signatures.py <datafile> <seed> <n_hashes> <n>`
 
 #### Test
 
-`tests/test_distance.py`
+`tests/test_signatures.py`
 
-### Initialization 
+## Hashing a band of a signature vector 
+
+We will now hash the signature matrix in bands (I). 
 
 #### Task
 
-Write a script that:
-1. Randomly picks `<k>` states randomly from the
-array in `answers/all_states.py` (you may import or copy this array to
-your code) using the random seed passed as argument and Python's
-`random.sample` function.
-2. Prints each selected state abbreviation on a different line.
-
-In the remainder, the centroids of the kmeans algorithm must be
-initialized using the method implemented here, perhaps using a line
-such as: `centroids = rdd.filter(lambda x: x['name'] in
-init_states).collect()`, where `rdd` is the RDD created in the data
-preparation task.
+Write a script that, given a state signature dictionary (as defined in
+the previous task), a band `<b>` and a number of rows `<r>`, (1)
+constructs a signature string for band `<b>` as `str(sig_dict)`, where
+`sig_dict` is a dictionary containing `<r>` keys defined as
+`sig_dict[i]=sig_vect[i]` for i in [b*r, (b+1)*r[, (2) prints the hash
+of `sig_dict` using Python's built-in `hash` function.
 
 #### Required syntax
 
-`init.py <k> <random_seed>`
+`hash_band.py <datafile> <seed> <state> <n>`
 
 #### Test
 
-`tests/test_init.py`
+`tests/test_hash_band.py`
 
-### First iteration
+## Hashing all signature vectors 
+
+We will now hash the signature matrix in bands (II). 
 
 #### Task
 
-Write a script that:
-1. Assigns each state that appears in `data/stateabbr.txt` to its 'closest' class where 'closest' means 'the class corresponding to the centroid closest to the state according to the distance defined in the distance function task'. Centroids must be initialized as
-in the previous task. Note that some states in the data set are not in `data/stateabbr.txt`: you must ignore them.
-2. Prints the classes in alphabetical order: 
-states must be ordered alphabetically within classes, and classes
-must be sorted according to the alphabetical order of their first
-state. Check `tests/first_iteration.txt` for formatting requirements.
+Write a script that, given an RDD of state signature dictionary (as
+defined previously), a number of bands `<b>` and a number of rows
+`<r>`, (1) maps RDD elements to a list of `<b>` 'bucket dictionaries',
+where the bucket dictionary of band `<i>` has a single key `sig_hash`
+that equals the hash of the state signature dictionary for the `ith`
+band (as defined in the previous task) and contains the abbreviation of the corresponding state (for instance `qc`), (2) collects and prints the first `<k>` elements in this RDD.
 
 #### Required syntax
 
-`first_iter.py <data_file> <k> <random_seed>`
+`hash_bands.py <datafile> <seed> <state> <n> <b> <r> <k>`
 
 #### Test
 
-`tests/test_first_iter.py`
+`tests/test_hash_bands.py`
 
-### Complete kmeans
+## Merging hash buckets
+
+We will now hash the signature matrix in bands (III). 
 
 #### Task
 
-Write a script that:
-1. Assigns states to classes as in the previous task.
-2. Updates the centroids based on the assignments in 1.
-3. Goes to step 1 if the assignments have not changed since the previous iteration.
-4. Prints classes as in the previous task but in an output file.
+Write a function `merge` that merges two hash buckets (as defined
+previously) `x` and `y` in a hash bucket `z` such that `z[k]` is a
+list containing all the elements in `x[k]` and all the elements in
+`y[k]`, where `k` is a key of `x` or a key of `y`. Write a script that
+takes the RDD produced in the previous task and (1) maps it, using the
+`flatMap` transformation, to a set of (`b`, `buckets`) pairs, where
+`b` is a band id and `buckets` are the buckets found in this band (as
+defined previously), (2) reduces it by key (band id) and merges all
+the buckets in a given band using function `merge`, (3) collects the first <k> elements and prints them.
 
 #### Required syntax
 
-`kmeans.py <data_file> <k> <random_seed> <output_file>`
+`hash_bands_merge.py <datafile> <seed> <state> <n> <b> <r> <k>`
 
 #### Test
 
-`tests/test_kmeans.py`
+`tests/test_hash_bands_merge.py`
 
-### Visualization
+## Printing similar items
 
-Here is a visualization of the clustering obtained in the previous
-task, obtained with R's 'maps' package (Canadian provinces, Alaska and
-Hawaii couldn't be represented and a different seed than used in the tests was used). The classes seem to make sense from a
-geographical point of view!
+We will now hash the signature matrix in bands (IV).
 
-![kmeans result](https://users.encs.concordia.ca/~tglatard/teaching/big-data/winter-2018/images/states.png)
+#### Task
+
+Write a script that prints the buckets that have more than 1 element,
+for all bands. These are finally the similar items, and you got them
+in O(n)!
+
+#### Required syntax
+
+`similar_items.py <datafile> <seed> <state> <n> <b> <r>`
+
+#### Test
+
+`tests/test_similar_items.py`
+
+## Bonus: similar items for a given similarity threshold
+
+The script written for the previous task takes `<b>` and `<r>` as
+parameters while a similarity threshold `<s>` would be more useful.
+
+#### Task
+
+Write a script that prints the similar items for a given similarity
+threshold `<s>`. Use the following relations:
+* `r=n/b`, where `n` is the number of hash functions in the signature matrix and `b` is the number of bands.
+* `s^n=(1/b)^(1/r)`
+Hint: Johann Heinrich Lambert (1728-1777) was a Swiss mathematician.
+
+#### Required syntax
+
+`similar_items_s.py <datafile> <seed> <state> <n> <s>`
+
+#### Test
+
+`tests/test_similar_items_s.py`
+
