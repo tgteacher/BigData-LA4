@@ -239,20 +239,24 @@ parameters while a similarity threshold `<s>` would be more useful.
 
 #### Task
 
-Write a script that prints the similar items for a given similarity
-threshold `<s>`.
+Write a script that prints the number of bands `<b>` and rows `<r>` to
+be used with a number `<n>` of hash functions to find the similar
+items for a given similarity threshold `<s>`. Your script should also
+print `<n_actual>` and `<s_actual>`, the actual values of `<n>` and
+`<b>` that will be used, which may differ from `<n>` and `<s>` due to
+rounding issues. Printing format is found in `tests/test-get-b-and-r.txt`. 
 
 Use the following relations:
-* `r=n/b`, where `n` is the number of hash functions in the signature matrix and `b` is the number of bands.
+* `r=n/b`
 * `s^n=(1/b)^(1/r)`
 
 Hint: Johann Heinrich Lambert (1728-1777) was a Swiss mathematician.
 
 #### Required syntax
 
-`similar_items_s.py <datafile> <seed> <state> <n> <s>`
+`get_b_and_r.py <n> <s>`
 
 #### Test
 
-`tests/test_similar_items_s.py`
+`tests/test_b_and_r.py`
 
