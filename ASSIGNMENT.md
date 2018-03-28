@@ -228,9 +228,12 @@ parameters while a similarity threshold `<s>` would be more useful.
 #### Task
 
 Write a script that prints the similar items for a given similarity
-threshold `<s>`. Use the following relations:
+threshold `<s>`.
+
+Use the following relations:
 * `r=n/b`, where `n` is the number of hash functions in the signature matrix and `b` is the number of bands.
 * `s^n=(1/b)^(1/r)`
+
 Hint: Johann Heinrich Lambert (1728-1777) was a Swiss mathematician.
 
 #### Required syntax
