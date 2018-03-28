@@ -141,23 +141,28 @@ We will now compute the min-hash signature matrix of the states.
 Write a function that takes (1) a state dictionary as defined in 1
 (yes, a *dictionary*, not an RDD, this function will be used later to
 map an RDD), and (2) a list of `<n>` hash functions generated as in
-the previous task. The function must return a state signature
-dictionary containing a `name` key, storing the state name, and a set
-of integer keys storing the min-hash signature values for the `<n>`
-hash functions. For instance, `sig[i]` will contain the min-hash
-signature value for the `ith` hash function. `sig[i]` must be computed
-as the minimum of {`h_i(j)`, `state[j]=1`}, as in slide 28 of the
-lecture on LSH, where `h_i` is the `ith` hash function in the list
-generated in the previous task.
+the previous task, setting `<max>` to the number of lines in
+`<datafile>`. The function must return a state signature dictionary
+containing a `name` key, storing the state name, and a set of integer
+keys storing the min-hash signature values for the `<n>` hash
+functions. For instance, `sig[i]` will contain the min-hash signature
+value for the `ith` hash function. `sig[i]` must be computed as the
+minimum of {`h_i(j)`, `state[k]=1`, `k` is the `jth` key in `state`
+(in alphabetical order)}, as in slide 28 of the lecture on LSH, where
+`h_i` is the `ith` hash function in the list generated in the previous
+task.
 
-Apply this function to the RDD of dictionary states to
-create a signature "matrix", in fact an RDD containing state
-signatures represented as dictionaries. Write a script that collects
-and prints the first `<n>` elements in this RDD.
+Apply this function to the RDD of dictionary states to create a
+signature "matrix", in fact an RDD containing state signatures
+represented as dictionaries. Write a script that prints
+the element of this RDD corresponding to state '<state>'.
+
+The random seed used to generate
+the hash function must be initialized from `<seed>`, as previously.
 
 #### Required syntax
 
-`signatures.py <datafile> <seed> <n> <n>`
+`signatures.py <datafile> <seed> <n> <state>`
 
 #### Test
 
