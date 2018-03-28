@@ -79,7 +79,7 @@ numbers greater or equal to *c*. The function will, for every integer
 *x* between *c* and *c+n*, add *x* to the current list if *x* is
 prime. A simple way to test if an integer *x* is prime is to check
 that *x* is not a multiple of any integer lower or equal than
-\sqrt{x}, that is, that *x % y* is not 0 for every *y* in *[2,
+\sqrt {x}, that is, that *x % y* is not 0 for every *y* in *[2,
 \sqrt{x}]*.
 
 ### Test
