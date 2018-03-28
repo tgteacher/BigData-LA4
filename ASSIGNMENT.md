@@ -170,20 +170,24 @@ the hash function must be initialized from `<seed>`, as previously.
 
 ## 6. Hashing a band of a signature vector 
 
-We will now hash the signature matrix in bands (I). 
+We will now hash the signature matrix in bands. All signature vectors,
+that is, state signatures contained in the RDD computed in the
+previous question, can be hashed independently. Here we compute the
+hash of a band of a signature vector.  
 
 #### Task
 
-Write a script that, given a state signature dictionary (as defined in
-the previous task), a band `<b>` and a number of rows `<r>`, (1)
-constructs a signature string for band `<b>` as `str(sig_dict)`, where
-`sig_dict` is a dictionary containing `<r>` keys defined as
+Write a script that, given the signature dictionary of state `<state>` computed from
+`<n>` hash functions (as defined in the previous task), a particular
+band `<b>` and a number of rows `<r>`, (1) constructs a signature
+string for band `<b>` as the string representation (obtained with
+`str`) of a dictionary `sig_dict` containing `<r>` keys defined as
 `sig_dict[i]=sig_vect[i]` for i in [b*r, (b+1)*r[, (2) prints the hash
-of `sig_dict` using Python's built-in `hash` function.
+of `sig_dict` using Python's built-in `hash` function. The random seed must be initialized from `<seed>`, as previously.
 
 #### Required syntax
 
-`hash_band.py <datafile> <seed> <state> <n>`
+`hash_band.py <datafile> <seed> <state> <n> <b> <r>`
 
 #### Test
 
