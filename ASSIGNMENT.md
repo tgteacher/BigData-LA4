@@ -111,7 +111,7 @@ function `h` from `<max>` and `<p>`, and (3) prints the value of `h(x)`.
 
 ## 4. Hash functions
 
-We will generate "good" hash functions using the generator in 3. and
+We will generate "good" hash functions using the generator in 3 and
 the prime numbers in 2.
 
 ### Task
@@ -132,25 +132,32 @@ the `ith` hash function in the list. The random seed must be initialized from `<
 
 
 
-## 5. Signature Matrix
+## 5. Min-hash signature matrix
 
-We will now compute the signature matrix of the states. 
+We will now compute the min-hash signature matrix of the states. 
 
 #### Task
 
-Write a function that takes (1) a state dictionary, as 
-defined in 1., and (2) a list of `<n_hashes>` hash functions generated in
+Write a function that takes (1) a state dictionary as defined in 1
+(yes, a *dictionary*, not an RDD, this function will be used later to
+map an RDD), and (2) a list of `<n>` hash functions generated as in
 the previous task. The function must return a state signature
 dictionary containing a `name` key, storing the state name, and a set
-of integer keys storing signature values for the `<n_hashes>` hash
-functions. For instance, `sig[i]` will contain the signature value for the `ith` hash function. Apply this function to the RDD of dictionary states
-to create a signature "matrix", in fact an RDD containing state
+of integer keys storing the min-hash signature values for the `<n>`
+hash functions. For instance, `sig[i]` will contain the min-hash
+signature value for the `ith` hash function. `sig[i]` must be computed
+as the minimum of {`h_i(j)`, `state[j]=1`}, as in slide 28 of the
+lecture on LSH, where `h_i` is the `ith` hash function in the list
+generated in the previous task.
+
+Apply this function to the RDD of dictionary states to
+create a signature "matrix", in fact an RDD containing state
 signatures represented as dictionaries. Write a script that collects
 and prints the first `<n>` elements in this RDD.
 
 #### Required syntax
 
-`signatures.py <datafile> <seed> <n_hashes> <n>`
+`signatures.py <datafile> <seed> <n> <n>`
 
 #### Test
 
