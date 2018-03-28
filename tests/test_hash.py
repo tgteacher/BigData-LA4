@@ -5,4 +5,4 @@ def test_hash():
     process = subprocess.Popen(command, shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     code=process.wait()
     assert(not code), "Command failed"
-    assert(int(process.stdout.read().decode("utf-8"))==3)
+    assert(int(process.stdout.read().decode("utf-8"))==6)

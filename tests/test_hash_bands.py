@@ -1,7 +1,7 @@
 import subprocess, os
 
 def test_hash_bands():
-    command="python ./answers/hash_bands.py ./data/plants.data 123 5 7"
+    command="setenv PYTHONHASHSEED 0; python ./answers/hash_bands.py ./data/plants.data 123 5 7"
     process = subprocess.Popen(command, shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     code=process.wait()
     assert(not code), "Command failed"

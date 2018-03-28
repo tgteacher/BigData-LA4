@@ -1,4 +1,4 @@
-# LA4: Similarity Search and Stream Analysis
+# LA4: Similarity Search (Locality-Sensitive Hashing)
 
 This repository is private in order to (1) encourage you to experiment
 various solutions without the fear of making mistakes publicly (2)

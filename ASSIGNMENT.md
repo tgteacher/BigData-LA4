@@ -164,7 +164,7 @@ task.
 Apply this function to the RDD of dictionary states to create a
 signature "matrix", in fact an RDD containing state signatures
 represented as dictionaries. Write a script that prints
-the element of this RDD corresponding to state '<state>'.
+the element of this RDD corresponding to state '<state>' using function `pretty_print_dict` (provided in `answers`).
 
 The random seed used to generate
 the hash function must be initialized from `<seed>`, as previously.
