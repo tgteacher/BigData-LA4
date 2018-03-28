@@ -69,10 +69,8 @@ You are strongly encouraged to use the RDD created here in the remainder of the 
 
 ## Prime numbers
 
-To create signatures we need hash functions. We will generate hash
-functions of the form h(x) = ax+b % p, where a and b are random
-numbers and p is a prime number. Thus we will start by generating
-prime numbers.
+To create signatures we need hash functions (see next task). To create
+hash functions, we need prime numbers.
 
 ### Task
 
@@ -81,12 +79,29 @@ numbers greater or equal to *c*. The function will, for every integer
 *x* between *c* and *c+n*, add *x* to the current list if *x* is
 prime. A simple way to test if an integer *x* is prime is to check
 that *x* is not a multiple of any integer lower or equal than
-*$\sqrt(x)$*, that is, that *x % y* is not 0 for every *y* in *[2,
-$\sqrt(x)$]*.
+\sqrt{x}, that is, that *x % y* is not 0 for every *y* in *[2,
+\sqrt{x}]*.
+
+### Test
+
+## Hash functions
+
+We will generate hash
+functions of the form h(x) = ax+b % p, where a and b are random
+numbers and p is a prime number.
+
+### Task
+
+Write a function that takes a pair (*max*, *p*) and returns a hash
+function h(x)=(ax+b)%p where *a* and *b* are random integers chosen
+uniformly between 1 and *max*, using Python's random.randint.
 
 ### Test
 
 ## Signature Matrix
+
+Write a function that takes (1) a state dictionary, as previously
+defined, and (2) a list of hash functions generated using the previous function. 
 
 The columns of the signature matrix will be computed independently.
 That is, every state dictionary in the RDD will be mapped to its
