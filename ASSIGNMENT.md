@@ -232,7 +232,7 @@ That's it, you have printed the similar items, in O(n)!
 
 `tests/test_hash_bands.py`
 
-## 9. Bonus: similar items for a given similarity threshold
+## 8. Bonus: similar items for a given similarity threshold
 
 The script written for the previous task takes `<n_b>` and `<n_r>` as
 parameters while a similarity threshold `<s>` would be more useful.
