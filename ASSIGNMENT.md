@@ -125,7 +125,7 @@ the `ith` hash function is obtained using the generator in 3, defining
 `<p>` as the `ith` prime number larger than `<max>` (`<p>` being
 obtained as in 1),
 2. prints the value of `h_i(x)`, where `h_i` is
-the `ith` hash function in the list. The random seed must be initialized from `<seed>`.
+the `ith` hash function in the list (starting at 0). The random seed must be initialized from `<seed>`.
 
 #### Required syntax
 
