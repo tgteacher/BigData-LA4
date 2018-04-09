@@ -133,7 +133,7 @@ the `ith` hash function in the list (starting at 0). The random seed must be ini
 
 ### Test
 
-`tests/test_hash.py`
+`tests/test_hash_list.py`
 
 
 
