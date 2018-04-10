@@ -243,7 +243,7 @@ Write a script that prints the number of bands `<b>` and rows `<r>` to
 be used with a number `<n>` of hash functions to find the similar
 items for a given similarity threshold `<s>`. Your script should also
 print `<n_actual>` and `<s_actual>`, the actual values of `<n>` and
-`<b>` that will be used, which may differ from `<n>` and `<s>` due to
+`<s>` that will be used, which may differ from `<n>` and `<s>` due to
 rounding issues. Printing format is found in `tests/test-get-b-and-r.txt`. 
 
 Use the following relations:
