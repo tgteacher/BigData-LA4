@@ -248,7 +248,7 @@ rounding issues. Printing format is found in `tests/test-get-b-and-r.txt`.
 
 Use the following relations:
 * `r=n/b`
-* `s^n=(1/b)^(1/r)`
+* `s=(1/b)^(1/r)`
 
 Hint: Johann Heinrich Lambert (1728-1777) was a Swiss mathematician.
 
