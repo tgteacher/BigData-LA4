@@ -133,7 +133,7 @@ the `ith` hash function in the list (starting at 0). The random seed must be ini
 
 ### Test
 
-`tests/test_hash.py`
+`tests/test_hash_list.py`
 
 
 
@@ -243,12 +243,12 @@ Write a script that prints the number of bands `<b>` and rows `<r>` to
 be used with a number `<n>` of hash functions to find the similar
 items for a given similarity threshold `<s>`. Your script should also
 print `<n_actual>` and `<s_actual>`, the actual values of `<n>` and
-`<b>` that will be used, which may differ from `<n>` and `<s>` due to
+`<s>` that will be used, which may differ from `<n>` and `<s>` due to
 rounding issues. Printing format is found in `tests/test-get-b-and-r.txt`. 
 
 Use the following relations:
 * `r=n/b`
-* `s^n=(1/b)^(1/r)`
+* `s=(1/b)^(1/r)`
 
 Hint: Johann Heinrich Lambert (1728-1777) was a Swiss mathematician.
 
