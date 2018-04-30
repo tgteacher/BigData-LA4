@@ -156,7 +156,7 @@ containing a `name` key, storing the state name, and a set of integer
 keys storing the min-hash signature values for the `<n>` hash
 functions. For instance, `sig[i]` will contain the min-hash signature
 value for the `ith` hash function. `sig[i]` must be computed as the
-minimum of {`h_i(j)`, `state[k]=1`, `k` is the `jth` key in `state`
+minimum of {`h_i(j)`}, `state[k]=1`, `k` is the `jth` key in `state`
 (in alphabetical order)}, as in slide 28 of the lecture on LSH, where
 `h_i` is the `ith` hash function in the list generated in the previous
 task.

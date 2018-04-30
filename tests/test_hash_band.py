@@ -9,4 +9,5 @@ def test_hash_band():
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
     code=process.wait()
     assert(not code), "Command failed"
-    assert(int(process.stdout.read().decode("utf-8"))==-6464292454374400732)
+    output = int(process.stdout.read().decode("utf-8"))
+    assert(output==-6464292454374400732 or output==-8417330518760795669)
