@@ -10,4 +10,4 @@ def test_hash_band():
     code=process.wait()
     assert(not code), "Command failed"
     result = int(process.stdout.read().decode("utf-8"))
-    assert(result==1871990837703389805 or result==-9063211600175770367)
+    assert(result==1871990837703389805 or result==4239803293702038060)
