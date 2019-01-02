@@ -1,4 +1,3 @@
-import subprocess, os
 from answers import hash_band
 
 def test_hash_band():

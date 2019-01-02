@@ -1,4 +1,3 @@
-import subprocess, os
 from answers import signatures as sig
 
 def test_signatures():

@@ -1,5 +1,4 @@
-import subprocess, os
-from primes import primes
+from answers import primes
 
 def test_primes():
     assert(primes(25, 23)==

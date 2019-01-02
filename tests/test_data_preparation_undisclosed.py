@@ -1,5 +1,5 @@
-import subprocess, os
-from data_preparation import data_preparation as dp
+from answers import data_preparation as dp
+import os
 
 def test_data_preparation():
     dp("./data/plants.data", "agnorhiza", "nc", "output-data-preparation.txt")
