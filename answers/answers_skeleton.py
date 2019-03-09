@@ -4,9 +4,26 @@ from pretty_print_bands import pretty_print_bands as ppb
 import random
 
 
-conf = SparkConf().setAppName("Assignment4")
-sc = SparkContext.getOrCreate(conf=conf)
+def init_spark():
+    spark = SparkSession \
+        .builder \
+        .appName("Python Spark SQL basic example") \
+        .config("spark.some.config.option", "some-value") \
+        .getOrCreate()
+    return spark
 
+def toCSVLineRDD(rdd):
+    "This function is used by toCSVLine to convert an RDD into a CSV string"
+    a = rdd.map(lambda row: ",".join([str(elt) for elt in row]))\
+           .reduce(lambda x,y: "\n".join([x,y]))
+    return a + "\n"
+def toCSVLine(data):
+    "This function convert an RDD or a DataFrame into a CSV string"
+    if isinstance(data, RDD):
+        return toCSVLineRDD(data)
+    elif isinstance(data, DataFrame):
+        return toCSVLineRDD(data.rdd)
+    return None
 
 def data_preparation(data_file, key, state, output_file):
     """Our implementation of LSH will be based on RDDs. As in the clustering
@@ -34,7 +51,6 @@ def data_preparation(data_file, key, state, output_file):
     """
     pass
 
-
 def primes(n, c):
     """To create signatures we need hash functions (see next task). To create
     hash functions,we need prime numbers.
@@ -48,7 +64,6 @@ def primes(n, c):
     c -- minimum prime number value
     """
     pass
-
 
 def hash_plants(s, m, p, x):
     """We will generate hash functions of the form h(x) = (ax+b) % p, where a
@@ -69,7 +84,6 @@ def hash_plants(s, m, p, x):
     x -- value to be hashed
     """
     pass
-
 
 def hash_list(s, m, n, i, x):
     """We will generate "good" hash functions using the generator in 3 and
@@ -95,20 +109,16 @@ def hash_list(s, m, n, i, x):
 def signatures(datafile, seed, n, state):
     """We will now compute the min-hash signature matrix of the states.
 
-    Task 5: Write a function that takes:
+    Task 5: Write a function that takes build a signature of size n for a given state.
 
-    1. a state dictionary as defined in 1 (yes, a dictionary, not an RDD, this
-       function will be used later to map an RDD), and
-    2. a list of <n> hash functions generated as in the previous task, setting
-       <m> to the number of lines in <datafile>.
+    1. Get the RDD of plant as done in the previous function.
+    2. Generate `n` hash functions as done before. Use the number of line in
+       datafile for the value of m.
+    3. Sort the plant by key and add an index to each line.
+    4. Build the signature array of size `n` where signature[i] is the minimum
+       value of the i-th hash function applied to the index of every plant that
+       appears in the given state.
 
-    The function must return a state signature dictionary containing a name
-    key, storing the state name, and a set of integer keys storing the min-hash
-    signature values for the <n> hash functions. For instance, sig[i] will
-    contain the min-hash signature value for the ith hash function. sig[i] must
-    be computed as the minimum of {h_i(j)}, state[k]=1, k is the jth key in
-    state (in alphabetical order)}, as in slide 28 of the lecture on LSH, where
-    h_i is the ith hash function in the list generated in the previous task.
 
     Apply this function to the RDD of dictionary states to create a signature
     "matrix", in fact an RDD containing state signatures represented as
@@ -137,10 +147,10 @@ def hash_band(datafile, seed, state, n, b, n_r):
     computed from <n> hash functions (as defined in the previous task),
     a particular band <b> and a number of rows <n_r>:
 
-    1. constructs a signature string for band <b> as the string representation
-       (obtained with str) of a dictionary sig_dict containing <n_r> keys
-       defined as sig_dict[i]=sig_vect[i] for i in [b*n_r, (b+1)*n_r[,
-    2. returns the hash of sig_dict using Python's built-in hash function.
+    1. Generate the signature dictionary for <state>.
+    2. Select the sub-dictionary of the signature with indexes between [b*n_r, (b+1)*n_r[.
+    3. Turn this sub-dictionary into a string.
+    4. Hash the string using the hash built-in function of python.
 
     The random seed must be initialized from <seed>, as previously.
 
