@@ -1,4 +1,6 @@
-from answers import hash_band
+import sys
+sys.path.insert(0, './answers')
+from answer import hash_band
 
 def test_hash_band():
     output = hash_band("./data/plants.data", 123, "qc", 12, 2, 2)

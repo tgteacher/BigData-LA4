@@ -1,12 +1,13 @@
-from answers import data_preparation as dp
-import os
+import os, sys
+sys.path.insert(0, './answers')
+from answer import data_preparation as dp
 
 def test_data_preparation():
-    dp("./data/plants.data", "urtica", "qc", "output-data-preparation.txt")
-    assert(open("output-data-preparation.txt","r").read()=="1"+os.linesep)
-    
-    dp("./data/plants.data", "zinnia maritima", "hi", "output-data-preparation.txt")
-    assert(open("output-data-preparation.txt","r").read()=="1"+os.linesep)
+    a = dp("./data/plants.data", "urtica", "qc", "output-data-preparation.txt")
+    assert(a==1)
 
-    dp("./data/plants.data", "tephrosia candida", "az", "output-data-preparation.txt")
-    assert(open("output-data-preparation.txt","r").read()=="0"+os.linesep)
+    a = dp("./data/plants.data", "zinnia maritima", "hi", "output-data-preparation.txt")
+    assert(a==1)
+
+    a = dp("./data/plants.data", "tephrosia candida", "az", "output-data-preparation.txt")
+    assert(a==0)

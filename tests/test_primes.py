@@ -1,4 +1,6 @@
-from answers import primes
+import sys
+sys.path.insert(0, './answers')
+from answer import primes
 
 def test_primes():
     assert(primes(50, 41)==
