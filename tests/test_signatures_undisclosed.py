@@ -1,4 +1,6 @@
-from answers import signatures as sig
+import sys
+sys.path.insert(0, './answers')
+from answer import signatures as sig
 
 def test_signatures():
     result = sig("./data/plants.data", 1234, 12, "ca")
