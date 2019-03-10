@@ -1,4 +1,6 @@
-from answers import get_b_and_r as br
+import sys
+sys.path.insert(0, './answers')
+from answer import get_b_and_r as br
 
 
 def test_b_and_r():

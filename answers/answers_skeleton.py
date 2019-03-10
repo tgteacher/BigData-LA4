@@ -12,18 +12,26 @@ def init_spark():
         .getOrCreate()
     return spark
 
+
 def toCSVLineRDD(rdd):
-    "This function is used by toCSVLine to convert an RDD into a CSV string"
+    """This function is used by toCSVLine to convert an RDD into a CSV string
+    
+    """
     a = rdd.map(lambda row: ",".join([str(elt) for elt in row]))\
            .reduce(lambda x,y: "\n".join([x,y]))
     return a + "\n"
+
+
 def toCSVLine(data):
-    "This function convert an RDD or a DataFrame into a CSV string"
+    """This function convert an RDD or a DataFrame into a CSV string
+
+    """
     if isinstance(data, RDD):
         return toCSVLineRDD(data)
     elif isinstance(data, DataFrame):
         return toCSVLineRDD(data.rdd)
     return None
+
 
 def data_preparation(data_file, key, state, output_file):
     """Our implementation of LSH will be based on RDDs. As in the clustering
@@ -109,12 +117,16 @@ def hash_list(s, m, n, i, x):
 def signatures(datafile, seed, n, state):
     """We will now compute the min-hash signature matrix of the states.
 
-    Task 5: Write a function that takes build a signature of size n for a given state.
+    Task 5: Write a function that takes build a signature of size n for a
+            given state.
 
-    1. Get the RDD of plant as done in the previous function.
+    1. Create the state dictionary as in data_preparation.
     2. Generate `n` hash functions as done before. Use the number of line in
        datafile for the value of m.
-    3. Sort the plant by key and add an index to each line.
+    3. Sort the plant dictionary by key (alphabetical order) such that the
+       ordering corresponds to a row index (starting at 0).
+       Note: the plant dictionary, by default, contains the state name.
+       Disregard this key-value pair when assigning indices to the plants.
     4. Build the signature array of size `n` where signature[i] is the minimum
        value of the i-th hash function applied to the index of every plant that
        appears in the given state.
@@ -148,7 +160,8 @@ def hash_band(datafile, seed, state, n, b, n_r):
     a particular band <b> and a number of rows <n_r>:
 
     1. Generate the signature dictionary for <state>.
-    2. Select the sub-dictionary of the signature with indexes between [b*n_r, (b+1)*n_r[.
+    2. Select the sub-dictionary of the signature with indexes between
+       [b*n_r, (b+1)*n_r[.
     3. Turn this sub-dictionary into a string.
     4. Hash the string using the hash built-in function of python.
 
@@ -177,7 +190,7 @@ def hash_bands(data_file, seed, n_b, n_r):
        is a pair.
     2. groups the resulting RDD by key: states that hash to the same bucket for
        band b will appear together.
-    3. returns the string output of  the buckets with more than 2 elements
+    3. returns the string output of the buckets with more than 2 elements
        using the function in pretty_print_bands.py.
 
     That's it, you have printed the similar items, in O(n)!
