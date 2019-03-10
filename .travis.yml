@@ -19,7 +19,7 @@ before_install:
   #- \mv -f vanilla/tests .
 
 script:
- - pytest tests
+ - pytest -svv tests
 
 after_success:
   - echo "success"
