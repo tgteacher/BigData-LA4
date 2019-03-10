@@ -1,7 +1,10 @@
-from pyspark import SparkConf, SparkContext
+from pyspark.sql import SparkSession
 from pretty_print_dict import pretty_print_dict as ppd
 from pretty_print_bands import pretty_print_bands as ppb
 import random
+# Dask imports
+import dask.bag as db
+import dask.dataframe as df
 
 
 def init_spark():
@@ -15,10 +18,10 @@ def init_spark():
 
 def toCSVLineRDD(rdd):
     """This function is used by toCSVLine to convert an RDD into a CSV string
-    
+
     """
     a = rdd.map(lambda row: ",".join([str(elt) for elt in row]))\
-           .reduce(lambda x,y: "\n".join([x,y]))
+           .reduce(lambda x, y: "\n".join([x, y]))
     return a + "\n"
 
 
@@ -51,13 +54,16 @@ def data_preparation(data_file, key, state, output_file):
              2) Prints to file <output_file> the value associated with key
                 <key> in the dictionary corresponding to state <state>
 
+    *** Note: Dask may be used instead of Spark.
+
     Keyword arguments:
     data_file -- csv file of plant name/states tuples (e.g. ./data/plants.data)
     key -- plant name
     state -- state abbreviation (see: ./data/stateabbr.txt)
     output_file -- file to save output data to
     """
-    pass
+    raise Exception("Not implemented yet")
+
 
 def primes(n, c):
     """To create signatures we need hash functions (see next task). To create
@@ -71,7 +77,8 @@ def primes(n, c):
     n -- integer representing the number of consecutive prime numbers
     c -- minimum prime number value
     """
-    pass
+    raise Exception("Not implemented yet")
+
 
 def hash_plants(s, m, p, x):
     """We will generate hash functions of the form h(x) = (ax+b) % p, where a
@@ -91,7 +98,8 @@ def hash_plants(s, m, p, x):
     p -- prime number
     x -- value to be hashed
     """
-    pass
+    raise Exception("Not implemented yet")
+
 
 def hash_list(s, m, n, i, x):
     """We will generate "good" hash functions using the generator in 3 and
@@ -112,7 +120,8 @@ def hash_list(s, m, n, i, x):
     i -- index of hash function to use
     x -- value to hash
     """
-    pass
+    raise Exception("Not implemented yet")
+
 
 def signatures(datafile, seed, n, state):
     """We will now compute the min-hash signature matrix of the states.
@@ -141,13 +150,16 @@ def signatures(datafile, seed, n, state):
     The random seed used to generate the hash function must be initialized from
     <seed>, as previously.
 
+    ***Note: Dask may be used instead of Spark.
+
     Keyword arguments:
     datafile -- the input filename
     seed -- seed to initialize random int generator
     n -- number of hash functions to generate
     state -- state abbreviation
     """
-    pass
+    raise Exception("Not implemented yet")
+
 
 def hash_band(datafile, seed, state, n, b, n_r):
     """We will now hash the signature matrix in bands. All signature vectors,
@@ -175,7 +187,8 @@ def hash_band(datafile, seed, state, n, b, n_r):
     b -- the band index
     n_r -- the number of rows
     """
-    pass
+    raise Exception("Not implemented yet")
+
 
 def hash_bands(data_file, seed, n_b, n_r):
     """We will now hash the complete signature matrix
@@ -201,7 +214,8 @@ def hash_bands(data_file, seed, n_b, n_r):
     n_b -- the number of bands
     n_r -- the number of rows in a given band
     """
-    pass
+    raise Exception("Not implemented yet")
+
 
 def get_b_and_r(n, s):
     """The script written for the previous task takes <n_b> and <n_r> as
@@ -225,4 +239,4 @@ def get_b_and_r(n, s):
     n -- the number of hash functions
     s -- the similarity threshold
     """
-    pass
+    raise Exception("Not implemented yet")
