@@ -45,7 +45,7 @@ def toCSVLine(data):
     return None
 
 
-def data_preparation(data_file, key, state, output_file):
+def data_preparation(data_file, key, state):
     """Our implementation of LSH will be based on RDDs. As in the clustering
     part of LA3, we will represent each state in the dataset as a dictionary of
     boolean values with an extra key to store the state name.
@@ -60,7 +60,7 @@ def data_preparation(data_file, key, state, output_file):
                     name    | abbreviation of the state
                     <plant> | 1 if <plant> occurs, 0 otherwise
 
-             2) Prints to file <output_file> the value associated with key
+             2) Returns the value associated with key
                 <key> in the dictionary corresponding to state <state>
 
     *** Note: Dask may be used instead of Spark.
@@ -69,7 +69,6 @@ def data_preparation(data_file, key, state, output_file):
     data_file -- csv file of plant name/states tuples (e.g. ./data/plants.data)
     key -- plant name
     state -- state abbreviation (see: all_states)
-    output_file -- file to save output data to
     """
     raise Exception("Not implemented yet")
 
