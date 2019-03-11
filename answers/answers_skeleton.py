@@ -129,7 +129,7 @@ def signatures(datafile, seed, n, state):
     Task 5: Write a function that takes build a signature of size n for a
             given state.
 
-    1. Create the state dictionary as in data_preparation.
+    1. Create the RDD of state dictionaries as in data_preparation.
     2. Generate `n` hash functions as done before. Use the number of line in
        datafile for the value of m.
     3. Sort the plant dictionary by key (alphabetical order) such that the
