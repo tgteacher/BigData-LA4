@@ -68,7 +68,7 @@ def data_preparation(data_file, key, state, output_file):
     Keyword arguments:
     data_file -- csv file of plant name/states tuples (e.g. ./data/plants.data)
     key -- plant name
-    state -- state abbreviation (see: ./data/stateabbr.txt)
+    state -- state abbreviation (see: all_states)
     output_file -- file to save output data to
     """
     raise Exception("Not implemented yet")
