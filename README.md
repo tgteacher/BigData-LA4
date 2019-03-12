@@ -1,48 +1,108 @@
 # LA4: Similarity Search (Locality-Sensitive Hashing)
 
-This repository is private in order to (1) encourage you to experiment
-various solutions without the fear of making mistakes publicly (2)
-discourage plagiarism, unauthorized collaboration and other offences
-under Concordia's [Academic Code of Conduct](http://www.concordia.ca/students/academic-integrity/offences.html). You are encouraged to
-discuss and exchange solutions during the lab sessions but you are
-*not allowed* to share code electronically.
+## Important note
+
+This assignment must be submitted individually. You are encouraged to 
+discuss and exchange solutions during the lab sessions or on Slack, but 
+you are *not allowed* to share code electronically. Plagiarism, 
+unauthorized collaboration and other offenses under Concordia's 
+[Academic Code of 
+Conduct](http://www.concordia.ca/students/academic-integrity/offences.html) 
+will be firmly handled. 
+
+## Preliminary comments
+
+To submit this assignment, you will have to be familiar with Git and
+GitHub. If you have never used these technologies, it is recommended to 
+go through the following tutorials:
+* [Git](https://rogerdudler.github.io/git-guide)
+* [GitHub](https://guides.github.com/)
+
+In particular, you will have to be able to:
+1. *Clone* a Git repository from GitHub: find the URL of a GitHub repository
+and clone it using `git clone <repo_url>`.
+2. *Commit* modifications to a local clone of a Git repository: `git add <file>` and `git commit -m "message"`.
+3. *Push* modifications from your local clone to the origin repository on GitHub: `git push`.
 
 ## Assignment submission
 
-To prepare and submit your assignment, you will:
-1. Ask your TA to give you access to the repository.
-2. Fork the repository on GitHub.
-3. In the settings of your fork, remove all contributors except (1) the course coordinator (username: `glatard`) (2) your TA. Failure to do so will be considered [unauthorized collaboration](http://www.concordia.ca/students/academic-integrity/offences.html) under Concordia's Academic Code of Conduct.
-4. Clone your fork and implement the assignment (see [specific instructions](./ASSIGNMENT.md)).
-5. Commit and push your solution to your fork.
-6. Release your fork on GitHub by the assignment due date. Any commit made after the due date will not be considered. 
+You have to submit your assignment through GitHub classroom, using the following procedure:
+1. Accept the assignment at https://classroom.github.com/a/ZhSBgWKd. This will create your own copy
+   of the assignment repository, located at http://github.com/tgteacher/bigdata-la4-w2019-your_github_username.
+2. Clone your copy of the assignment repository on your computer, and 
+implement the functions in `answers/answer.py`, following the instructions in the 
+documentation strings. A skeleton of your answer file already exists in file `answers/answer.py`
+  with the required syntax for each function.
+3. Commit your solution to your local copy of the assignment repository.
+4. Push your solution to your GitHub copy of the assignment repository.
 
-Your code will be tested with Python 3.5.1 and Apache Spark version 2.2.0. Your code will be tested on `orwell.encs.concordia.ca` (a computer representative of the lab workstations) after the following modules were loaded:
-* `module load spark`
-* `module load python/3.5.1`
+**Important**: please make sure that the email address you use in Moodle is
+added to your GitHub account (you can add multiple addresses to your 
+GitHub account).
 
-Important note: you are not supposed to make a pull request from your
-fork to the TA's one. Doing so will result in your code being made
-publicly available among the other students, which will also be
-considered [unauthorized
-collaboration](http://www.concordia.ca/students/academic-integrity/offences.html)
-under Concordia's Academic Code of Conduct.
+You can repeat steps 3 and 4 as many times as you wish. Your assignment 
+will be graded based on a snapshot of your repository taken on the 
+submission deadline.
 
-## Specific instructions
+## Evaluation
 
-Specific instructions to complete this assignment are available [here](./ASSIGNMENT.md).
+### Grading
 
-## Grading
+#### General Rule
 
-To grade your assignment, your TA will:
-1. Clone the latest release of your forked GitHub repository.
-2. Source the `env.sh` script: `source answers/env.sh`. Feel free to add any setup step to this script (e.g. if your solution requires environment variables).
-3. Install any dependency with `pip install -r requirements.txt --user`.
-4. Add undisclosed tests to directory `test`.
-5. Run `pytest`.
+Your assignment will be automatically graded through software tests. 
 
-Your grade will be determined from the number of passing tests as
-returned by pytest. For instance, if 11 tests have passed out of 13,
-your grade will be 84.6%.
+The tests are already available in directory `tests`. You
+may want to run them as you implement your solution, to check that your
+code passes them. To do so, you will have to install `pytest` and simply
+run `pytest tests` in the base directory of the assignment. 
 
-You may want to run `pytest` in your fork to check the tests beforehand. To do that, you will have to install `pytest` using `pip install --user pytest ; setenv PATH ${PATH}:${HOME}/.local/bin`
+Your grade will be determined from the number of passing tests as 
+returned by pytest. All tests will contribute equally to the final 
+grade. For instance, if 20 tests are evaluated, and your solution passes 18 tests, then your grade 
+will be 90%.
+
+This grading scheme is meant to be transparent and objective. However,
+it is also radical and you should be very meticulous with your coding: 
+make a single syntax error in your answer file, such as a spurious 
+tabulation character, and all the tests will fail! To avoid that kind 
+of surprises, you are strongly encouraged to check the output of the 
+tests on [Travis CI](https://travis-ci.com/tgteacher) regularly.    
+
+#### Exceptions
+
+The rules below aim at discouraging cheating. They might sound a bit harsh,
+but in general be cool: if you don't aim at cheating, you probably won't :)
+
+1. You are not allowed to modify the tests to make them pass. Every deliberate
+  attempt to modify the tests will result in a grade of 0.
+2. You must use the libraries mentioned in the instructions to 
+  implement the assignment. Any attempt to implement the solution with a different
+  library, for instance Dask when Spark was expected, will result in a grade of 0.
+3. You are not allowed to make the tests pass using a hard-coded solution. Your solution
+  must, in principle, apply to other similar datasets. Any hard-coded solution will receive 
+  the grade of 0.
+4. Any deliberate attempt to trick the grading system by making the tests pass
+   without providing a correct, non-hardcoded, solution will receive the grade of 0.
+
+ 
+### Test environment and live feedback
+
+Your code will be tested with Python 3.5 in a Ubuntu environment 
+provided by Travis CI. It is your responsibility to ensure that the 
+tests will pass in this environment. The following resources will help 
+you.
+
+Python 3.5 is available in the computer labs and can be loaded using 
+`module load python/3.5.1`. You can check the version of Python that 
+you are using by running `python --version`. Computer labs can easily be
+accessed remotely, using `ssh`.
+
+It is strongly suggested that you run the disclosed tests before 
+submitting your assignment, using `pytest` as explained previously. 
+
+Live feedback on your assignment is provided through Travis CI 
+[here](https://travis-ci.com/tgteacher). You will have to sign-in using 
+your GitHub account to see your assignment repository. **Your grade will be determined 
+from the result of the
+tests executed in Travis CI**.
