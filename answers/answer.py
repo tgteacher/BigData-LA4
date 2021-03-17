@@ -1,6 +1,5 @@
 from pyspark.sql import SparkSession
 from pretty_print_dict import pretty_print_dict as ppd
-from pretty_print_bands import pretty_print_bands as ppb
 import random
 from scipy.special import lambertw
 # Dask imports
@@ -212,8 +211,9 @@ def hash_bands(data_file, seed, n_b, n_r):
        is a pair.
     2. groups the resulting RDD by key: states that hash to the same bucket for
        band b will appear together.
-    3. Return a dictionnary where the key is the band b, and the value is a list
-       of buckets with more than 2 elements.
+    3. *Return* a dictionary where the key is the band b, and the value is a list
+       of buckets with 2 or more elements (note: sorting the elements in the list may be
+       necessary).
 
     That's it, you have printed the similar items, in O(n)!
 
