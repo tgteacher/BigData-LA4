@@ -211,8 +211,8 @@ def hash_bands(data_file, seed, n_b, n_r):
        is a pair.
     2. groups the resulting RDD by key: states that hash to the same bucket for
        band b will appear together.
-    3. returns the string output of the buckets with more than 2 elements
-       using the function in pretty_print_bands.py.
+    3. Return a dictionnary where the key is the band b, and the value is a list
+       of buckets with more than 2 elements.
 
     That's it, you have printed the similar items, in O(n)!
 
